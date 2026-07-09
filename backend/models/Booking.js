@@ -2,40 +2,38 @@ const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema(
   {
-    user: {
+    customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    services: [
-      {
-        service: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Service',
-          required: true,
-        },
-        quantity: {
-          type: Number,
-          default: 1,
-        },
-      },
-    ],
+    eventService: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'EventService',
+      required: true,
+    },
     eventDate: {
       type: Date,
       required: [true, 'Please add an event date'],
     },
-    status: {
-      type: String,
-      enum: ['pending', 'approved', 'rejected', 'completed'],
-      default: 'pending',
-    },
-    totalPrice: {
+    guestCount: {
       type: Number,
-      required: true,
+      required: [true, 'Please add a guest count'],
+      min: [1, 'Guest count must be at least 1'],
     },
-    specialRequests: {
+    location: {
+      type: String,
+      required: [true, 'Please add an event location'],
+      trim: true,
+    },
+    notes: {
       type: String,
       default: '',
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'confirmed', 'rejected', 'completed'],
+      default: 'pending',
     },
   },
   {

@@ -2,7 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
+
+// Import routes
 const authRoutes = require('./routes/authRoutes');
+const eventServiceRoutes = require('./routes/eventServiceRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
+const galleryRoutes = require('./routes/galleryRoutes');
+const testimonialRoutes = require('./routes/testimonialRoutes');
+const enquiryRoutes = require('./routes/enquiryRoutes');
 
 // Connect to database
 connectDB();
@@ -13,8 +20,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Register API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/services', eventServiceRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/gallery', galleryRoutes);
+app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/enquiries', enquiryRoutes);
 
 // Root route
 app.get('/', (req, res) => {
