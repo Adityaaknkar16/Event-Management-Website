@@ -9,27 +9,29 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 
 // Website Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
-import Gallery from './pages/Gallery';
-import BookingForm from './pages/BookingForm';
-import Testimonials from './pages/Testimonials';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import MyBookings from './pages/MyBookings';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
+import GalleryPage from './pages/GalleryPage';
+import BookingPage from './pages/BookingPage';
+import MyBookingsPage from './pages/MyBookingsPage';
+import TestimonialsPage from './pages/TestimonialsPage';
+import ContactPage from './pages/ContactPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Admin Pages
 import AdminLayout from './pages/admin/AdminLayout';
-import Dashboard from './pages/admin/Dashboard';
-import ManageServices from './pages/admin/ManageServices';
-import ManageBookings from './pages/admin/ManageBookings';
-import ManageGallery from './pages/admin/ManageGallery';
-import ManageEnquiries from './pages/admin/ManageEnquiries';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminServicesPage from './pages/admin/AdminServicesPage';
+import AdminBookingsPage from './pages/admin/AdminBookingsPage';
+import AdminGalleryPage from './pages/admin/AdminGalleryPage';
+import AdminTestimonialsPage from './pages/admin/AdminTestimonialsPage';
+import AdminEnquiriesPage from './pages/admin/AdminEnquiriesPage';
 
 // Layout for customer-facing pages
 const ClientLayout = () => {
@@ -51,35 +53,38 @@ function App() {
         <Routes>
           {/* Client Facing routes under ClientLayout */}
           <Route path="/" element={<ClientLayout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="services" element={<Services />} />
-            <Route path="services/:id" element={<ServiceDetail />} />
-            <Route path="gallery" element={<Gallery />} />
-            <Route path="testimonials" element={<Testimonials />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="reset-password/:token" element={<ResetPassword />} />
+            <Route index element={<HomePage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="services" element={<ServicesPage />} />
+            <Route path="services/:id" element={<ServiceDetailPage />} />
+            <Route path="gallery" element={<GalleryPage />} />
+            <Route path="testimonials" element={<TestimonialsPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="reset-password/:token" element={<ResetPasswordPage />} />
             
             {/* Protected Client routes */}
             <Route
-              path="booking"
+              path="book"
               element={
                 <ProtectedRoute>
-                  <BookingForm />
+                  <BookingPage />
                 </ProtectedRoute>
               }
             />
             <Route
-              path="mybookings"
+              path="my-bookings"
               element={
                 <ProtectedRoute>
-                  <MyBookings />
+                  <MyBookingsPage />
                 </ProtectedRoute>
               }
             />
+            
+            {/* 404 Route */}
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
 
           {/* Admin routes under AdminLayout */}
@@ -91,11 +96,12 @@ function App() {
               </AdminRoute>
             }
           >
-            <Route index element={<Dashboard />} />
-            <Route path="services" element={<ManageServices />} />
-            <Route path="bookings" element={<ManageBookings />} />
-            <Route path="gallery" element={<ManageGallery />} />
-            <Route path="enquiries" element={<ManageEnquiries />} />
+            <Route index element={<AdminDashboardPage />} />
+            <Route path="services" element={<AdminServicesPage />} />
+            <Route path="bookings" element={<AdminBookingsPage />} />
+            <Route path="gallery" element={<AdminGalleryPage />} />
+            <Route path="testimonials" element={<AdminTestimonialsPage />} />
+            <Route path="enquiries" element={<AdminEnquiriesPage />} />
           </Route>
         </Routes>
       </Router>

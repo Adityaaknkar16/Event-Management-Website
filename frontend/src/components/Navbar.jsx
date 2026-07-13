@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Menu, X, Calendar, LogOut, User, LayoutDashboard } from 'lucide-react';
+import { Menu, X, LogOut, LayoutDashboard, ChevronRight } from 'lucide-react';
 
 const Navbar = () => {
-  const { isAuthenticated, isAdmin, user, logout } = useAuth();
+  const { isAuthenticated, isAdmin, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -16,104 +16,108 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/services', label: 'Services' },
-    { path: '/gallery', label: 'Gallery' },
-    { path: '/testimonials', label: 'Reviews' },
-    { path: '/about', label: 'About' },
+    { path: '/services', label: 'Packages' },
+    { path: '/about', label: 'Process' },
+    { path: '/gallery', label: 'Locations' },
+    { path: '/testimonials', label: 'Gallery' },
     { path: '/contact', label: 'Contact' },
   ];
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo" onClick={() => setIsOpen(false)}>
-          <Calendar className="logo-icon" />
-          <span>Vibe<span>Events</span></span>
+    <nav className="luxury-navbar" style={{ position: 'sticky', top: 0, background: 'var(--bg-glass)', backdropFilter: 'var(--glass-blur)', borderBottom: '1px solid var(--border-color)' }}>
+      <div className="container luxury-nav-container">
+        <Link to="/" className="luxury-nav-logo" onClick={() => setIsOpen(false)}>
+          <div className="logo-monogram">E</div>
+          <div className="logo-wordmark">
+            <h2>EVENT LUXE</h2>
+            <span>PARADISE</span>
+          </div>
         </Link>
 
         {/* Desktop Menu */}
-        <div className="navbar-links">
+        <div className="luxury-nav-menu">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
-              className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+              className={({ isActive }) => (isActive ? 'luxury-nav-item active' : 'luxury-nav-item')}
             >
               {link.label}
             </NavLink>
           ))}
         </div>
 
-        <div className="navbar-actions">
+        <div className="nav-dropdown-btn" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           {isAuthenticated ? (
-            <div className="user-menu-wrapper">
+            <>
               {isAdmin && (
-                <Link to="/admin" className="btn btn-secondary dashboard-btn">
-                  <LayoutDashboard size={16} />
-                  <span>Admin Panel</span>
+                <Link to="/admin" className="btn-luxury-solid btn-sm">
+                  <LayoutDashboard size={14} /> Admin
                 </Link>
               )}
               {!isAdmin && (
-                <Link to="/mybookings" className="btn btn-secondary">
+                <Link to="/my-bookings" className="btn-luxury-ghost btn-sm">
                   My Bookings
                 </Link>
               )}
-              <button onClick={handleLogout} className="btn btn-danger logout-btn">
-                <LogOut size={16} />
-                <span>Logout</span>
+              <button onClick={handleLogout} className="btn btn-danger btn-sm" style={{ padding: '8px 16px', borderRadius: '50px' }}>
+                <LogOut size={14} />
               </button>
-            </div>
+            </>
           ) : (
-            <div className="auth-buttons">
-              <Link to="/login" className="btn btn-outline">Login</Link>
-              <Link to="/register" className="btn btn-primary">Sign Up</Link>
-            </div>
+            <>
+              <Link to="/login" className="luxury-nav-item" style={{ fontSize: '13px' }}>Log In</Link>
+              <Link to="/book" className="btn-luxury-solid btn-sm">
+                Book Event <ChevronRight size={12} />
+              </Link>
+            </>
           )}
         </div>
 
         {/* Mobile menu button */}
-        <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
+        <button className="mobile-luxury-menu-toggle" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu Panel */}
       {isOpen && (
-        <div className="mobile-nav-panel">
+        <div className="mobile-nav-panel" style={{ display: 'flex', top: '80px', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)', padding: '24px' }}>
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               className={({ isActive }) => (isActive ? 'mobile-nav-link active' : 'mobile-nav-link')}
               onClick={() => setIsOpen(false)}
+              style={{ color: 'var(--lux-text-dim)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '12px 0' }}
             >
               {link.label}
             </NavLink>
           ))}
-          <div className="mobile-nav-actions">
+          <div className="mobile-nav-actions" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '20px' }}>
             {isAuthenticated ? (
               <>
                 {isAdmin && (
-                  <Link to="/admin" className="mobile-nav-action-btn admin-btn" onClick={() => setIsOpen(false)}>
-                    <LayoutDashboard size={18} /> Admin Dashboard
+                  <Link to="/admin" className="btn-luxury-solid" onClick={() => setIsOpen(false)}>
+                    Admin Dashboard
                   </Link>
                 )}
                 {!isAdmin && (
-                  <Link to="/mybookings" className="mobile-nav-action-btn" onClick={() => setIsOpen(false)}>
+                  <Link to="/my-bookings" className="btn-luxury-ghost" onClick={() => setIsOpen(false)}>
                     My Bookings
                   </Link>
                 )}
-                <button onClick={handleLogout} className="mobile-nav-action-btn logout-btn">
-                  <LogOut size={18} /> Logout
+                <button onClick={handleLogout} className="btn-luxury-ghost logout-btn">
+                  Logout
                 </button>
               </>
             ) : (
               <>
-                <Link to="/login" className="mobile-nav-action-btn login-btn" onClick={() => setIsOpen(false)}>
+                <Link to="/login" className="btn-luxury-ghost" onClick={() => setIsOpen(false)}>
                   Login
                 </Link>
-                <Link to="/register" className="mobile-nav-action-btn register-btn" onClick={() => setIsOpen(false)}>
-                  Sign Up
+                <Link to="/book" className="btn-luxury-solid" onClick={() => setIsOpen(false)}>
+                  Book Event
                 </Link>
               </>
             )}
