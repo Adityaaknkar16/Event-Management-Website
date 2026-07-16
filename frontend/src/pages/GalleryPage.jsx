@@ -3,6 +3,7 @@ import api from '../api/axios';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 import EmptyState from '../components/shared/EmptyState';
 import { Camera, X, ZoomIn } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const GalleryPage = () => {
   const [items, setItems] = useState([]);
@@ -46,11 +47,16 @@ const GalleryPage = () => {
   return (
     <div className="luxury-theme-wrapper" style={{ paddingBottom: '80px' }}>
       <section className="page-header">
-        <div className="container">
+        <motion.div 
+          className="container"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <span className="section-subtitle">VISUAL ARCHIVE</span>
           <h1>Event Locations</h1>
           <p>Explore Visual setups from our destination banquets, fortresses, and palaces.</p>
-        </div>
+        </motion.div>
       </section>
 
       <section className="container">
@@ -75,13 +81,28 @@ const GalleryPage = () => {
         ) : items.length === 0 ? (
           <EmptyState message="No photos found under this category." icon={<Camera size={48} style={{ color: 'var(--lux-gold)' }} />} />
         ) : (
-          <div className="gallery-grid">
+          <motion.div 
+            className="gallery-grid"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: 0.1 }
+              }
+            }}
+          >
             {items.map(item => (
-              <div 
+              <motion.div 
                 key={item._id} 
                 className="gallery-card"
                 onClick={() => setLightboxItem(item)}
                 style={{ height: '300px' }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
               >
                 <div className="gallery-image-wrapper">
                   <img 
@@ -98,9 +119,9 @@ const GalleryPage = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </section>
 

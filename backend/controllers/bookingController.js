@@ -25,6 +25,7 @@ const createBooking = async (req, res) => {
       guestCount,
       location,
       notes: notes || '',
+      status: 'pending', // Explicitly set status to pending and ignore any status in req.body
     });
 
     res.status(201).json(booking);

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import api from '../api/axios';
 import Button from '../components/shared/Button';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -46,17 +47,28 @@ const ContactPage = () => {
   return (
     <div className="luxury-theme-wrapper" style={{ paddingBottom: '80px' }}>
       <section className="page-header">
-        <div className="container">
+        <motion.div 
+          className="container"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <span className="section-subtitle">CONCIERGE DESK</span>
           <h1>Contact Us</h1>
           <p>Get in touch with our event planners to design your upcoming celebration.</p>
-        </div>
+        </motion.div>
       </section>
 
       <section className="container">
         <div className="contact-grid">
           {/* Details */}
-          <div className="contact-details">
+          <motion.div 
+            className="contact-details"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--lux-text-light)', fontSize: '32px' }}>Let's Begin Planning</h2>
             <p className="contact-desc" style={{ color: 'var(--lux-text-dim)' }}>
               Concierge coordinators are available to answer queries relating to destination scheduling, floor layouts, catering menus, and booking rates.
@@ -98,10 +110,17 @@ const ContactPage = () => {
                 loading="lazy"
               ></iframe>
             </div>
-          </div>
+          </motion.div>
 
           {/* Form */}
-          <div className="contact-form-wrapper" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
+          <motion.div 
+            className="contact-form-wrapper" 
+            style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--lux-text-light)', fontSize: '24px' }}>Send a Message</h2>
             {success ? (
               <div className="success-card-inline" style={{ textAlign: 'center', padding: '20px 0' }}>
@@ -176,7 +195,7 @@ const ContactPage = () => {
                 </Button>
               </form>
             )}
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

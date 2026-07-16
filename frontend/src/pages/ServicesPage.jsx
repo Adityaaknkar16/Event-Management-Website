@@ -5,6 +5,7 @@ import LoadingSpinner from '../components/shared/LoadingSpinner';
 import EmptyState from '../components/shared/EmptyState';
 import Button from '../components/shared/Button';
 import { Sparkles, Filter } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
@@ -46,11 +47,16 @@ const ServicesPage = () => {
   return (
     <div className="luxury-theme-wrapper" style={{ paddingBottom: '60px' }}>
       <section className="page-header">
-        <div className="container">
+        <motion.div 
+          className="container"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <span className="section-subtitle">OUR COLLECTION</span>
           <h1>Luxury Packages</h1>
           <p>Handpicked traditional setups coordinated down to the smallest detail.</p>
-        </div>
+        </motion.div>
       </section>
 
       <section className="container">
@@ -77,9 +83,28 @@ const ServicesPage = () => {
         {filteredServices.length === 0 ? (
           <EmptyState message="No packages found under this category." />
         ) : (
-          <div className="services-grid">
+          <motion.div 
+            className="services-grid"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: 0.1 }
+              }
+            }}
+          >
             {filteredServices.map(service => (
-              <div key={service._id} className="service-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px', overflow: 'hidden' }}>
+              <motion.div 
+                key={service._id} 
+                className="service-card" 
+                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px', overflow: 'hidden' }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              >
                 <div style={{ height: '240px', position: 'relative', overflow: 'hidden' }}>
                   <img 
                     src={service.imageUrl} 
@@ -110,9 +135,9 @@ const ServicesPage = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </section>
     </div>

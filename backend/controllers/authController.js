@@ -3,7 +3,10 @@ const User = require('../models/User');
 
 // Helper to generate JWT token
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET || 'supersecretkey_change_me_in_production', {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET env variable is not set');
+  }
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 };

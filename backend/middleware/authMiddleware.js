@@ -13,7 +13,10 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecretkey_change_me_in_production');
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET env variable is not set');
+      }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get user from the token, exclude password
       req.user = await User.findById(decoded.id).select('-password');

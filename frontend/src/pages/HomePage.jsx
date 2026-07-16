@@ -5,6 +5,7 @@ import './luxury/HomePage.css';
 import LuxuryServiceCard from '../components/luxury/LuxuryServiceCard';
 import BookingModal from '../components/luxury/BookingModal';
 import api from '../api/axios';
+import { motion } from 'framer-motion';
 
 const HomePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,7 +94,12 @@ const HomePage = () => {
           >
             <div className="hero-slide-overlay"></div>
             <div className="container">
-              <div className="hero-slide-content">
+              <motion.div 
+                className="hero-slide-content"
+                initial={{ opacity: 0, y: 30 }}
+                animate={idx === activeSlide ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
                 <h1 dangerouslySetInnerHTML={{ __html: slide.title }}></h1>
                 <p>{slide.subtitle}</p>
                 <div className="hero-slide-actions">
@@ -104,7 +110,7 @@ const HomePage = () => {
                     Book Event
                   </Link>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         ))}
@@ -127,16 +133,36 @@ const HomePage = () => {
       {/* SERVICES SECTION */}
       <section className="luxury-services-section">
         <div className="container">
-          <div className="centered-header">
+          <motion.div 
+            className="centered-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <span className="section-subtitle">Handpicked Events</span>
             <h2>Our Services</h2>
             <p>
               We coordinate all facets of luxury destination designs, providing bespoke accents customized specifically for your guest list.
             </p>
-          </div>
-
+          </motion.div>
+ 
           {/* Fanned service row */}
-          <div className="fanned-services-wrapper">
+          <motion.div 
+            className="fanned-services-wrapper"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.15
+                }
+              }
+            }}
+          >
             {services.map((service, idx) => (
               <LuxuryServiceCard
                 key={service.id}
@@ -146,22 +172,47 @@ const HomePage = () => {
                 onBookClick={() => setModalOpen(true)}
               />
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* TESTIMONIAL PREVIEW */}
       <section className="home-section container" style={{ padding: '80px 0' }}>
-        <div className="section-header centered">
+        <motion.div 
+          className="section-header centered"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="section-subtitle">Testimonials</span>
           <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--lux-text-light)' }}>Loved by Our Clients</h2>
-        </div>
+        </motion.div>
         {testimonials.length === 0 ? (
           <p className="no-data">No approved reviews yet.</p>
         ) : (
-          <div className="testimonials-grid">
+          <motion.div 
+            className="testimonials-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: 0.15 }
+              }
+            }}
+          >
             {testimonials.map((t) => (
-              <div key={t._id} className="testimonial-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '24px', borderRadius: '12px' }}>
+              <motion.div 
+                key={t._id} 
+                className="testimonial-card" 
+                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '24px', borderRadius: '12px' }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+                }}
+              >
                 <p style={{ fontStyle: 'italic', color: 'var(--lux-text-dim)' }}>"{t.message}"</p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px' }}>
                   <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--lux-gold)', color: '#000', display: 'flex', alignItems: 'center', justify: 'center', fontWeight: 'bold' }}>
@@ -172,14 +223,21 @@ const HomePage = () => {
                     <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Verified Customer</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </section>
 
       {/* CTA BANNER */}
-      <section className="cta-section container" style={{ background: 'linear-gradient(135deg, #181818 0%, #0a0a0a 100%)', border: '1px solid var(--lux-gold)' }}>
+      <motion.section 
+        className="cta-section container" 
+        style={{ background: 'linear-gradient(135deg, #181818 0%, #0a0a0a 100%)', border: '1px solid var(--lux-gold)' }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="cta-content">
           <h2 style={{ fontFamily: 'var(--font-serif)' }}>Plan Your Royal Destination Experience</h2>
           <p style={{ color: 'var(--lux-text-dim)' }}>Schedule a personal consultation with our master planners today.</p>
@@ -187,7 +245,7 @@ const HomePage = () => {
             Book Event Now
           </Link>
         </div>
-      </section>
+      </motion.section>
 
       {/* BOOKING MODAL */}
       <BookingModal 

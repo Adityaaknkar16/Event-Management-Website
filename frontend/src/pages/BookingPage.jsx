@@ -110,9 +110,9 @@ const BookingPage = () => {
       <div className="luxury-theme-wrapper container" style={{ padding: '80px 0', textAlign: 'center' }}>
         <div className="success-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--lux-gold)', padding: '60px 40px', borderRadius: '16px', display: 'inline-block', maxWidth: '600px' }}>
           <CheckCircle2 size={64} style={{ color: 'var(--lux-gold)', marginBottom: '24px' }} />
-          <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--lux-text-light)', fontSize: '28px', marginBottom: '16px' }}>Request Sent — Awaiting Confirmation</h2>
+          <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--lux-text-light)', fontSize: '28px', marginBottom: '16px' }}>Request Received</h2>
           <p style={{ color: 'var(--lux-text-dim)', fontSize: '15px', lineHeight: '1.6', marginBottom: '32px' }}>
-            Thank you! Your custom booking request has been successfully sent to our event coordinators. We will review the details and contact you shortly with the final approval status.
+            Your booking request has been received and is pending admin approval. You'll be notified once it's reviewed.
           </p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
             <Link to="/my-bookings">

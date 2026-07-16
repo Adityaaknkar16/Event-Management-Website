@@ -1,11 +1,13 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const LuxuryServiceCard = ({ service, isActive, onCardClick, onBookClick }) => {
   return (
-    <div 
+    <motion.div 
       className={`luxury-service-card ${isActive ? 'active-fanned' : ''}`}
       onClick={onCardClick}
+      whileHover={{ y: -6, transition: { duration: 0.2 } }}
     >
       <div className="card-image-container">
         <img src={service.imageUrl} alt={service.title} />
@@ -28,7 +30,7 @@ const LuxuryServiceCard = ({ service, isActive, onCardClick, onBookClick }) => {
           Book Event
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

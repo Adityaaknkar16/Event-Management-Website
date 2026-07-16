@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 import EmptyState from '../components/shared/EmptyState';
@@ -6,6 +7,7 @@ import TestimonialCard from '../components/TestimonialCard';
 import Button from '../components/shared/Button';
 import { useAuth } from '../context/AuthContext';
 import { Star, MessageSquareCode, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const TestimonialsPage = () => {
   const { isAuthenticated } = useAuth();
@@ -61,11 +63,16 @@ const TestimonialsPage = () => {
   return (
     <div className="luxury-theme-wrapper" style={{ paddingBottom: '80px' }}>
       <section className="page-header">
-        <div className="container">
+        <motion.div 
+          className="container"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <span className="section-subtitle">GUEST JOURNAL</span>
           <h1>Reviews & Testimonials</h1>
           <p>Read what hosts and families share about their destination experiences.</p>
-        </div>
+        </motion.div>
       </section>
 
       <section className="container">
@@ -78,16 +85,40 @@ const TestimonialsPage = () => {
             ) : testimonials.length === 0 ? (
               <EmptyState message="No approved reviews published yet." />
             ) : (
-              <div className="testimonials-grid-vertical">
+              <motion.div 
+                className="testimonials-grid-vertical"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: { staggerChildren: 0.1 }
+                  }
+                }}
+              >
                 {testimonials.map((t) => (
-                  <TestimonialCard key={t._id} testimonial={t} />
+                  <motion.div 
+                    key={t._id}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                    }}
+                  >
+                    <TestimonialCard testimonial={t} />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
 
           {/* Form Section */}
-          <div className="testimonial-form-section">
+          <motion.div 
+            className="testimonial-form-section"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="form-sticky-card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
               <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--lux-text-light)' }}>Write a Review</h3>
               
@@ -150,7 +181,7 @@ const TestimonialsPage = () => {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
